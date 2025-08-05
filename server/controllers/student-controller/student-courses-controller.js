@@ -52,49 +52,37 @@ const getCoursesByStudentId = async (req, res) => {
   }
 };
 
-// ✅ NEW: Add Course to student’s purchased list
-const enrollInCourse = async (req, res) => {
+// Enroll student in course
+const StudentCourse = require("../../models/StudentCourses");
+
+exports.enrollInCourse = async (req, res) => {
   try {
-    const { userId, course } = req.body;
+    const { userId } = req.params;
+    const courseData = req.body;
 
-    let studentRecord = await StudentCourses.findOne({ userId });
+    const alreadyEnrolled = await StudentCourse.findOne({
+      studentId: userId,
+      courseId: courseData.courseId,
+    });
 
-    if (!studentRecord) {
-      // ✅ Create new record if doesn't exist
-      studentRecord = new StudentCourses({
-        userId,
-        courses: [course],
-      });
-    } else {
-      // ✅ Avoid duplicate enrollment
-      const alreadyEnrolled = studentRecord.courses.some(
-        (c) => c.courseId === course.courseId
-      );
-
-      if (alreadyEnrolled) {
-        return res.status(400).json({
-          success: false,
-          message: "Course already enrolled",
-        });
-      }
-
-      studentRecord.courses.push(course);
+    if (alreadyEnrolled) {
+      return res.status(400).json({ success: false, message: "Already enrolled" });
     }
 
-    await studentRecord.save();
+    const newEnrollment = new StudentCourse({
+      ...courseData,
+      studentId: userId,
+    });
 
-    res.status(200).json({
-      success: true,
-      message: "Course enrolled successfully",
-    });
+    await newEnrollment.save();
+
+    return res.status(201).json({ success: true, data: newEnrollment });
   } catch (error) {
-    console.log("Enroll error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Enrollment failed",
-    });
+    console.error("Enrollment error:", error);
+    return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
 
 module.exports = { getCoursesByStudentId, enrollInCourse };
 

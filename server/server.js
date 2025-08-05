@@ -9,6 +9,7 @@ const studentViewCourseRoutes = require("./routes/student-routes/course-routes")
 const studentViewOrderRoutes = require("./routes/student-routes/order-routes");
 const studentCoursesRoutes = require("./routes/student-routes/student-courses-routes");
 const studentCourseProgressRoutes = require("./routes/student-routes/course-progress-routes");
+const studentCourseRoutes = require("./routes/student-courses-routes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +28,9 @@ const allowedOrigins = [
   "http://localhost:5173",
   (process.env.CLIENT_URL || "").trim()
 ];
+//----------------------------------------------------------------------------------Tampered Part-----------------
+
+app.use("/student", studentCourseRoutes);
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -44,9 +48,10 @@ app.use(cors({
 
 
 
-
+//------------------------------------------------------------------------------------------------------
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //database connection
 mongoose

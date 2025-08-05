@@ -261,7 +261,6 @@
 
 
 //--------------------------------------------------------------------------------------------
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -281,7 +280,7 @@ import {
   checkCoursePurchaseInfoService,
   fetchStudentViewCourseListService,
 } from "@/services";
-import { enrollInCourseService } from "@/services/enroll-service";
+import axios from "axios";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -376,8 +375,12 @@ function StudentViewCoursesPage() {
         courseImage: course.image,
       };
 
-      const res = await enrollInCourseService(auth?.user?._id, courseData);
-      if (res?.success) {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/student/enroll-course/${auth?.user?._id}`,
+        courseData
+      );
+
+      if (res?.data?.success) {
         alert("Enrolled successfully!");
       } else {
         alert("Enrollment failed or already enrolled.");
@@ -477,17 +480,14 @@ function StudentViewCoursesPage() {
             {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
               <div className="space-y-4">
                 {studentViewCoursesList.map((courseItem) => (
-                  <Card
-                    className="cursor-pointer"
-                    key={courseItem?._id}
-                  >
+                  <Card className="cursor-pointer" key={courseItem?._id}>
                     <CardContent className="flex gap-4 p-4">
                       <div
                         className="w-48 h-32 flex-shrink-0"
                         onClick={() => handleCourseNavigate(courseItem?._id)}
                       >
                         <img
-                          src={courseItem?.image}
+                          src={courseItem?.image?.replace("http://", "https://")}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -499,7 +499,7 @@ function StudentViewCoursesPage() {
                           {courseItem?.title}
                         </CardTitle>
                         <p className="text-sm text-gray-600 mb-1">
-                          Created By{" "}
+                          Created By {" "}
                           <span className="font-bold">{courseItem?.instructorName}</span>
                         </p>
                         <p className="text-[16px] text-gray-600 mt-3 mb-2">
