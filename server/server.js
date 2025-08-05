@@ -29,7 +29,7 @@ const allowedOrigins = [
 ];
 //----------------------------------------------------------------------------------Tampered Part-----------------
 
-app.use("/student", studentCourseRoutes);
+app.use("/student", studentCoursesRoutes);
 
 app.use(cors({
   origin: function (origin, callback) {
