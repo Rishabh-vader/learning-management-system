@@ -90,3 +90,166 @@ CLOUDINARY_API_SECRET=your-api-secret
 
 # Run the Server
 npm rundev
+
+
+#THE COMPLETE STRUCTURE IS:
+LMS Project
+
+server/
+│
+├── server.js
+├── package.json
+├── package-lock.json
+├── .gitignore
+│
+├── models/
+│   ├── User.js
+│   ├── Course.js
+│   ├── Order.js
+│   ├── StudentCourses.js
+│   └── CourseProgress.js
+│
+├── controllers/
+│   ├── auth-controller/
+│   │   └── index.js
+│   ├── instructor-controller/
+│   │   └── course-controller.js
+│   └── student-controller/
+│       ├── course-controller.js
+│       ├── order-controller.js
+│       ├── student-courses-controller.js
+│       └── course-progress-controller.js
+│
+├── routes/
+│   ├── auth-routes/
+│   │   └── index.js
+│   ├── instructor-routes/
+│   │   ├── course-routes.js
+│   │   └── media-routes.js
+│   └── student-routes/
+│       ├── course-routes.js
+│       ├── order-routes.js
+│       ├── student-courses-routes.js
+│       └── course-progress-routes.js
+│
+├── middleware/
+│   └── auth-middleware.js
+│
+├── helpers/
+│   ├── cloudinary.js
+│   └── paypal.js
+│
+└── uploads/
+
+client/
+│
+├── .gitignore
+├── components.json
+├── eslint.config.js
+├── index.html
+├── jsconfig.json
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── vite.config.js
+├── README.md
+│
+├── public/
+│   ├── banner-img   // PNG
+│   └── vite.svg
+│
+├── src/
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+│
+│   ├── api/
+│   │   └── axiosInstance.js
+│
+│   ├── assets/
+│   │   └── react.svg
+│
+│   ├── components/
+│   │   ├── common-form/
+│   │   │   ├── form-controls.jsx
+│   │   │   └── index.jsx
+│   │   ├── instructor-view/
+│   │   │   ├── dashboard/
+│   │   │   │   └── index.jsx
+│   │   │   └── courses/
+│   │   │       ├── index.jsx
+│   │   │       └── add-new-course/
+│   │   │           ├── course-curriculum.jsx
+│   │   │           ├── course-landing.jsx
+│   │   │           └── course-settings.jsx
+│   │   ├── media-progress-bar/
+│   │   │   └── index.jsx
+│   │   ├── route-guard/
+│   │   │   └── index.jsx
+│   │   ├── student-view/
+│   │   │   ├── common-layout.jsx
+│   │   │   └── header.jsx
+│   │   ├── ui/
+│   │   │   ├── button.jsx
+│   │   │   ├── card.jsx
+│   │   │   ├── checkbox.jsx
+│   │   │   ├── dialog.jsx
+│   │   │   ├── dropdown-menu.jsx
+│   │   │   ├── input.jsx
+│   │   │   ├── label.jsx
+│   │   │   ├── scroll-area.jsx
+│   │   │   ├── select.jsx
+│   │   │   ├── slider.jsx
+│   │   │   ├── switch.jsx
+│   │   │   ├── table.jsx
+│   │   │   ├── tabs.jsx
+│   │   │   ├── toast.jsx
+│   │   │   ├── toaster.jsx
+│   │   │   ├── skeleton.jsx
+│   │   │   └── textarea.jsx
+│   │   └── video-player/
+│   │       └── index.jsx
+│
+│   ├── config/
+│   │   └── index.js
+│
+│   ├── context/
+│   │   ├── auth-context/
+│   │   │   └── index.jsx
+│   │   ├── instructor-context/
+│   │   │   └── index.jsx
+│   │   └── student-context/
+│   │       └── index.jsx
+│
+│   ├── hooks/
+│   │   └── use-toast.js
+│
+│   ├── lib/
+│   │   └── utils.js
+│
+│   ├── pages/
+│   │   ├── auth/
+│   │   │   └── index.jsx
+│   │   ├── instructor/
+│   │   │   ├── index.jsx
+│   │   │   └── add-new-course.jsx
+│   │   ├── not-found/
+│   │   │   └── index.jsx
+│   │   ├── student/
+│   │   │   ├── course-details/
+│   │   │   │   └── index.jsx
+│   │   │   ├── course-progress/
+│   │   │   │   └── index.jsx
+│   │   │   ├── courses/
+│   │   │   │   └── index.jsx
+│   │   │   ├── home/
+│   │   │   │   └── index.jsx
+│   │   │   ├── payment-return/
+│   │   │   │   └── index.jsx
+│   │   │   └── student-courses/
+│   │   │       └── index.jsx
+│
+│   ├── services/
+│   │   └── index.js
+
